@@ -1,0 +1,206 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Screen Reader Hidden Content Test</title>
+	<style>
+		body { 
+			background: #fff;
+			color: #000;
+			font-size: 1em;
+			margin: 1em;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		.invisible { 
+			visibility: hidden;
+		}
+		.notDisplayed { 
+			display: none;
+		}
+		.offScreen { 
+			position:absolute;
+			left:-10000px;
+			top:auto;
+			width:1px;
+			height:1px;
+			overflow:hidden;
+		}
+		.clipped { 
+		  position: absolute !important;
+  		clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+		  clip: rect(1px, 1px, 1px, 1px);
+		}		
+		.sizeZero { 
+  		height: 0; 
+  		width: 0; 
+  		overflow: hidden;
+		}
+		#p9 { 
+  		line-height: 0;
+  		overflow: hidden; 
+		}
+		#p10 { 
+  		font-size: 0;   		
+		}
+		th, td { 
+      border: 1px solid;
+      padding: 0.25em;
+      font-size: 0.85em;  		
+		}
+	</style>
+<link href="./Screen Reader Hidden Content Test_files/css" rel="stylesheet"></head><div id="warning-container"><i data-reactroot=""></i></div>
+<body style="">
+<h1>Screen Reader Hidden Content Test</h1>
+
+<p>The purpose of this page is to test whether screen readers support various approaches at hiding text. This page includes several sections, each consisting of an h2 heading and a "hidden" paragraph. The paragraph is hidden using the technique described by the heading.</p>
+
+<h2>Test #1: Visibility:Hidden</h2>
+<p id="p1" class="invisible">This text is hidden using visibility:hidden</p>
+
+<h2>Test #2: Display:None</h2>
+<p id="p2" class="notDisplayed">This text is hidden using display:none</p>
+
+<h2>Test #3: Positioned off screen</h2>
+<p id="p3" class="offScreen">This text is positioned off-screen</p>
+
+<h2>Test #4: Clipped</h2>
+<p id="p4" class="clipped">This text is clipped</p>
+
+<h2>Test #5: HTML5 Hidden</h2>
+<p id="p5" hidden="">This text is hidden with the HTML5 <em>hidden</em> attribute</p>
+
+<h2>Test #6: aria-hidden</h2>
+<p id="p6" aria-hidden="true">This text is hidden with aria-hidden</p>
+
+<h2>Test #7: role="presentation"</h2>
+<ul id="p7" role="presentation">
+  <li>This is the first item in a list marked with role="presentation"</li>
+  <li>This is the second item in the same list</li>
+</ul>
+
+<h2>Test #8: height and width of 0 with overflow:hidden</h2>
+<p id="p8" class="sizeZero">This text is hidden with width and height of 0</p>
+
+<h2>Test #9: line-height:0</h2>
+<p id="p9">This text is hidden with line-height:0</p>
+
+<h2>Test #10: font-size:0</h2>
+<p id="p10">This text is hidden with font-size:0</p>
+
+
+
+<h2>Aria-LabelledBy Test</h2>
+<p>Each of the following three buttons includes an <em>aria-labelledby</em> attribute, pointing 
+to each of the hidden paragraphs. If a screen reader reads each additional label text for each button, we know that the screen reader can access aria-labelledby content regardless of how that content is originally hidden.</p>
+<div>
+  <button aria-labelledby="p1">Visibility</button> 
+  <button aria-labelledby="p2">Display</button> 
+  <button aria-labelledby="p3">Off-Screen</button>
+  <button aria-labelledby="p4">Clipped</button>
+  <button aria-labelledby="p5">HTML5 Hidden</button>
+  <button aria-labelledby="p6">aria-hidden</button>
+  <button aria-labelledby="p7">role="presentation"</button>
+  <button aria-labelledby="p8">Zero height &amp; width</button>
+  <button aria-labelledby="p9">line-height:0</button>
+  <button aria-labelledby="p10">font-size:0</button>
+</div>
+
+<h2>Observations (updated April 2015)</h2>
+
+<p><strong>Note regarding role="presentation"</strong>: This ARIA role is expected to hide structure, not content. Therefore, the test for this method is a little different: The two items in the list marked with role="presentation" are expected to be read, but not identified as a list.</p>
+  
+<table id="results">
+  <thead>
+    <tr>
+      <th scope="col">Screen reader</th>
+      <th scope="col">visibility:hidden</th>
+      <th scope="col">display:none</th>
+      <th scope="col">Off screen</th>      
+      <th scope="col">Clipped</th>
+      <th scope="col">HTML5 hidden</th>
+      <th scope="col">aria-hidden</th>
+      <th scope="col">role="presentation"</th>
+      <th scope="col">Zero height &amp; width</th>
+      <th scope="col">line-height:0</th>
+      <th scope="col">font-size:0</th>
+    </tr>
+  </thead>
+  <tbody>    
+    <tr>
+      <td>JAWS 16 in IE11</td>
+      <td>Hidden</td> <!-- visibility:hidden -->
+      <td>Hidden</td> <!--display:none -->
+      <td>Not hidden</td> <!-- off screen -->
+      <td>Not hidden</td> <!--Clipped -->
+      <td>Hidden</td> <!--HTML5 hidden -->
+      <td>Hidden</td> <!--aria-hidden -->
+      <td>Structure hidden</td> <!--role="presentation" -->
+      <td>Not hidden</td> <!--zero height & width -->
+      <td>Hot hidden</td> <!--line-height:0 -->
+      <td>Not hidden</td> <!--font-size:0 -->
+    </tr>
+    <tr>
+      <td>NVDA 2015.1 in FF 36</td>
+      <td>Hidden</td> <!-- visibility:hidden -->
+      <td>Hidden</td> <!--display:none -->
+      <td>Not hidden</td> <!-- off screen -->
+      <td>Not hidden</td> <!--Clipped -->
+      <td>Hidden</td> <!--HTML5 hidden -->
+      <td>Hidden</td> <!--aria-hidden -->
+      <td>Structure not hidden</td> <!--role="presentation" -->
+      <td>Not hidden</td> <!--zero height & width -->
+      <td>Hot hidden</td> <!--line-height:0 -->
+      <td>Not hidden</td> <!--font-size:0 -->
+    </tr>
+    <tr>
+      <td>Window-Eyes 9.0 in IE11</td>
+      <td>Hidden</td> <!-- visibility:hidden -->
+      <td>Hidden</td> <!--display:none -->
+      <td>Not hidden</td> <!-- off screen -->
+      <td>Not hidden</td> <!--Clipped -->
+      <td>Hidden</td> <!--HTML5 hidden -->
+      <td>Hidden</td> <!--aria-hidden -->
+      <td>Structure hidden</td> <!--role="presentation" -->
+      <td>Not hidden</td> <!--zero height & width -->
+      <td>Hot hidden</td> <!--line-height:0 -->
+      <td>Not hidden</td> <!--font-size:0 -->
+    </tr>
+    <tr>
+      <td>VoiceOver in Mac OS X Safari (Yosemite)</td>
+      <td>Hidden</td> <!-- visibility:hidden -->
+      <td>Hidden</td> <!--display:none -->
+      <td>Not hidden</td> <!-- off screen -->
+      <td>Not hidden</td> <!--Clipped -->
+      <td>Hidden</td> <!--HTML5 hidden -->
+      <td>Hidden</td> <!--aria-hidden -->
+      <td>Structure hidden</td> <!--role="presentation" -->
+      <td><strong>Hidden</strong></td> <!--zero height & width -->
+      <td><strong>Hidden</strong></td> <!--line-height:0 -->
+      <td><strong>Hidden</strong></td> <!--font-size:0 -->
+    </tr>
+    <tr>
+      <td>VoiceOver in iOS 8</td>
+      <td>Hidden</td> <!-- visibility:hidden -->
+      <td>Hidden</td> <!--display:none -->
+      <td>Not hidden</td> <!-- off screen -->
+      <td>Not hidden</td> <!--Clipped -->
+      <td>Hidden</td> <!--HTML5 hidden -->
+      <td>Hidden</td> <!--aria-hidden -->
+      <td>Structure hidden</td> <!--role="presentation" -->
+      <td>Not hidden</td> <!--zero height & width -->
+      <td>Hot hidden</td> <!--line-height:0 -->
+      <td>Not hidden</td> <!--font-size:0 -->
+    </tr>
+  </tbody>
+</table>
+
+<h2>Results of aria-labelledby test</h2>
+<ul>
+  <li>Neither JAWS 15 nor 16 seems to support aria-labelledby on buttons in IE11. In Firefox 36.x, both of these versions of JAWS announce all aria-labelledby labels</li>
+  <li>NVDA 2015.1 in FF 36 announces all aria-laballedby labels</li>
+  <li>Window-Eyes 9.0 in IE11 announces all aria-labelledby labels except the one marked role="presentation"</li>
+  <li>VoiceOver in Mac OS X Safari (Yosemite) announces all aria-labelledby labels</li>
+  <li>VoiceOver in iOS 8 announces all aria-labelledby labels</li>
+</ul>
+
+
+
+<span style="margin: 0px auto; border: 2px dotted rgb(255, 165, 0); position: absolute; z-index: 2147483647; visibility: hidden; left: 552px; width: 0px; top: 142px; height: 0px;"></span><span style="z-index: 2147483647; position: absolute; visibility: hidden; left: 537px; width: 50px; top: 127px; height: 20px; font-size: 10px; color: black;"></span></body></html>
